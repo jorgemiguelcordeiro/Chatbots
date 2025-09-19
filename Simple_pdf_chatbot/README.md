@@ -1,4 +1,4 @@
-# 📄 Chatbot
+# 📄 Chatbot using RAG
 
 An interactive **PDF Document Chatbot** built with Gradio and Hugging Face, which lets you upload a PDF and chat with it using the **GPT-OSS-20B** model.  
 
