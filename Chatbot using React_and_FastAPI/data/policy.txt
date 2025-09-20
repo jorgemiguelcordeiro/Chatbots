@@ -1,0 +1,16 @@
+Company Policies:
+
+1. Data Security:
+We are SOC 2 and GDPR compliant. All customer data is encrypted and stored securely.
+
+2. SLA (Service Level Agreement):
+We guarantee 99.9% uptime for all services. Critical issues are resolved within 2 hours.
+
+3. Confidentiality:
+StellarSoft does not share or sell customer data under any circumstances.
+
+4. Refund & Cancellation:
+Refund requests are honored within 30 days. Subscriptions can be canceled anytime.
+
+5. Client Care Promise:
+We aim to respond to all inquiries within 1 business day.

@@ -1,0 +1,3 @@
+# Backend environment variables
+# Obtain a token at https://huggingface.co/settings/tokens
+HUGGINGFACE_API_KEY=hf_xxx_your_token_here

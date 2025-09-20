@@ -1,0 +1,45 @@
+Frequently Asked Questions
+
+Q: How do I change my password?
+A: Go to Settings → Security → Change Password. You’ll receive a confirmation email.
+
+Q: What payment methods are accepted?
+A: We accept major credit cards and PayPal for subscriptions.
+
+Q: How can I contact support?
+A: Email support@example.com or use the in-app chat during business hours.
+
+Q: Do you offer refunds?
+A: Yes, within 14 days of purchase for monthly plans (see policy).
+StellarSoft is a global SaaS provider helping startups and enterprises build scalable digital solutions. 
+We specialize in automation, cloud infrastructure, and AI-powered software to accelerate business growth.
+
+---
+
+FAQ 1:
+Q: What services does StellarSoft provide?
+A: StellarSoft offers SaaS platform development, custom enterprise software, cloud migration, and AI integration solutions.
+
+---
+
+FAQ 2:
+Q: Where are your offices located?
+A: Our headquarters are in Austin, Texas, with support centers in London and Singapore.
+
+---
+
+FAQ 3:
+Q: What are your business hours?
+A: We’re available Monday to Friday, 9 AM to 7 PM CST. Enterprise clients get 24/7 support.
+
+---
+
+FAQ 4:
+Q: How do I contact support?
+A: Email support@stellarsoft.io, call +1-888-STELLAR, or use our live chat.
+
+---
+
+FAQ 5:
+Q: Does StellarSoft offer refunds?
+A: Yes! We have a 30-day refund policy for all SaaS subscriptions. Clients can request refunds via email.
