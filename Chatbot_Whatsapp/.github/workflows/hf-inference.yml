@@ -1,0 +1,27 @@
+name: Hugging Face Inference
+
+on:
+  workflow_dispatch:   # allows you to run it manually from GitHub UI
+  push:                # or trigger on every push
+    branches: [ "main" ]
+
+jobs:
+  run-inference:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run script
+        env:
+          HUGGINGFACE_API_KEY: ${{ secrets.HUGGINGFACE_API_KEY }}
+        run: python your_script.py
