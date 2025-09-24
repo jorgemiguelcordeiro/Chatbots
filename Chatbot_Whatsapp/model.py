@@ -15,3 +15,10 @@ if not logger.handlers: #Only creates a handler if it doesn’t exist already.
     logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
 
 # API Key and Models
+HUGGINGFACE_API_KEY = os.getenv("HUGGINGFACE_API_KEY") #We have put this in secrets of github
+HF_API_URL = "https://router.huggingface.co/v1/chat/completions" #This is the OpenAI-compatible chat endpoint for Hugging Face. It’s used with models that support chat-completions like "openai/gpt-oss-20b:groq".
+MODEL = "openai/gpt-oss-20b:groq"
+HEADERS = {
+    "Authorization": f"Bearer {HUGGINGFACE_API_KEY}", #The word "Bearer " before the key is part of the OAuth 2.0 standard. OAuth 2.0 is a standard protocol for authorization.
+    "Content-Type": "application/json"
+}
