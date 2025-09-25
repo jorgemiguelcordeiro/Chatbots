@@ -5,6 +5,7 @@ from fastapi import FastAPI, HTTPException #used to return error messages if som
 from pydantic import BaseModel #used for structured request parsing and validation.
 from typing import List, Union, Optional
 from model import get_response, add_documents, collection #everything from model.py
+from whatsapp_utils import send_whatsapp_message
 import os
 
 app = FastAPI() #starts the web server
@@ -84,6 +85,9 @@ async def whatsapp_webhook(request: Request):  #WhatsApp sends POST requests whe
     reply = get_response(user_message)
 
     # Aqui você deve enviar a resposta para o WhatsApp via API (código omitido para você implementar)
-    # Exemplo: send_whatsapp_message(sender_id, reply)
+    success = send_whatsapp_message(sender_id, reply)
+    if not success:
+        # Handle failure if needed (e.g., log or retry)
+        pass
 
     return {"status": "received"}
