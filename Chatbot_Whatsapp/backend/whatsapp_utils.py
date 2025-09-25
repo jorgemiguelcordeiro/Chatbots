@@ -16,35 +16,35 @@ def send_whatsapp_message(recipient_id: str, message_text: str) -> bool:
 
     Args:
         recipient_id (str): The WhatsApp user ID (phone number or ID from webhook).
-        message_text (str): The text message to send.
+        message_text (str): The text message to send from the chatbot to the whatsapp.
 
     Returns:
         bool: True on success, False on failure.
     """
-    if not WHATSAPP_API_URL or not WHATSAPP_TOKEN:
+    if not WHATSAPP_API_URL or not WHATSAPP_TOKEN:  #credentials check
         logger.error("WhatsApp API URL or Token not set in environment.")
         return False
 
     headers = {
-        "Authorization": f"Bearer {WHATSAPP_TOKEN}",
+        "Authorization": f"Bearer {WHATSAPP_TOKEN}", #Standard OAuth 2.0 style auth.
         "Content-Type": "application/json"
     }
-
+    # this is what the Whatsapp api expects
     payload = {
-        "messaging_product": "whatsapp",
-        "to": recipient_id,
-        "type": "text",
+        "messaging_product": "whatsapp", #tells meta it is for whatsapp
+        "to": recipient_id, #user's phone number
+        "type": "text", #we are sending plain text
         "text": {
-            "body": message_text
+            "body": message_text # the actual reply
         }
     }
 
     try:
-        response = requests.post(WHATSAPP_API_URL, headers=headers, json=payload)
-        response.raise_for_status()
-        logger.info(f"Sent WhatsApp message to {recipient_id}")
+        response = requests.post(WHATSAPP_API_URL, headers=headers, json=payload) #it sends the message. 
+        response.raise_for_status() #throws an error
+        logger.info(f"Sent WhatsApp message to {recipient_id}") #if it is sucessful , sent a message to {recipient_id}
         return True
     except requests.exceptions.RequestException as e:
-        logger.error(f"Failed to send message to {recipient_id}: {e}")
+        logger.error(f"Failed to send message to {recipient_id}: {e}") #if it fails to send a message 
         return False
 
