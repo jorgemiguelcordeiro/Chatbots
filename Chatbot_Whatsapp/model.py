@@ -22,3 +22,37 @@ HEADERS = {
     "Authorization": f"Bearer {HUGGINGFACE_API_KEY}", #The word "Bearer " before the key is part of the OAuth 2.0 standard. OAuth 2.0 is a standard protocol for authorization.
     "Content-Type": "application/json"
 }
+
+# Embedding Model and Chroma Database
+
+embedding_model = SentenceTransformer("all-MiniLM-L6-v2") # loads a local HF model to create vector embeddings
+chroma_client = chromadb.Client() #initializes Chroma DB
+collection = chroma_client.get_or_create_collection(
+    name="company_docs",  #creates or gets a collection called company_docs
+    embedding_function=embedding_functions.SentenceTransformerEmbeddingFunction(model_name="all-MiniLM-L6-v2")
+)
+
+#chunking long texts
+
+def chunk_text(text: str, max_chars: int = 1200, overlap: int = 200) -> List[str]:
+    cleaned = (text or "").strip()
+    if not cleaned:
+        return []
+    chunks: List[str] = []
+    start = 0
+    length = len(cleaned)
+    while start < length:
+        end = min(start + max_chars, length)
+        chunk = cleaned[start:end]
+        chunks.append(chunk)
+        if end == length:
+            break
+        start = max(0, end - overlap)
+    return chunks
+
+
+
+
+
+
+
