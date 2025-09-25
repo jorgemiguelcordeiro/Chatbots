@@ -50,9 +50,90 @@ def chunk_text(text: str, max_chars: int = 1200, overlap: int = 200) -> List[str
         start = max(0, end - overlap)
     return chunks
 
+# Adding Documents to the Vector Database
+'''
+1st - Break docs into chunks.
 
+2nd - Embed each chunk into a vector.
 
+3rd - Store chunks with an ID for each in the vector database.
 
+4th - Log the number of items added.
+'''
+def add_documents(docs):
+    """
+    Add a list of documents to the vector database with chunking and logs.
+    docs: List of strings (your company knowledge base)
+    """
+    if not docs:
+        logger.info("No documents provided for ingestion.")
+        return
 
+    logger.info("Starting ingestion of %d document(s).", len(docs))
 
+    all_chunks: List[str] = []
+    all_ids: List[str] = []
+
+    total_chunks = 0
+    for i, doc in enumerate(docs):
+        chunks = chunk_text(doc)
+        logger.info("Doc %d: produced %d chunk(s).", i + 1, len(chunks))
+        total_chunks += len(chunks)
+        for j, ch in enumerate(chunks):
+            all_chunks.append(ch)
+            all_ids.append(f"doc{i+1}_chunk{j+1}")
+
+    if not all_chunks:
+        logger.warning("No chunks generated; nothing to embed.")
+        return
+
+    logger.info("Embedding and adding %d chunk(s) to Chroma...", len(all_chunks))
+    collection.add(documents=all_chunks, ids=all_ids)
+
+    try:
+        count = collection.count()
+        logger.info("Chroma collection status: %d vectors stored.", count)
+    except Exception:
+        logger.info("Chroma collection status: count unavailable.")
+
+    logger.info("Ingestion complete. %d chunk(s) added.", total_chunks)
+
+#Retrieving Relevant Context
+
+def retrieve_context(query: str, k: int = 3):  #Takes a user’s query, turns it into a vector, finds top k most similar chunks in the database.
+    results = collection.query(
+        query_texts=[query],
+        n_results=k
+    )
+    return results["documents"][0] if results["documents"] else []
+
+#Building the prompt for the AI model
+
+def build_prompt(user_query: str, context_docs: list) -> str: # Assembles the retrieved document text and the user’s question into a prompt for the chatbot model.
+    context_text = "\n".join(context_docs)
+    system_message = (
+        """You are Aurora, a helpful ..."""
+        f"Context:\n{context_text}\n\n"
+    )
+    return system_message + f"User question: {user_query}"
+
+# Getting the Chatbot’s Response
+
+def get_response(user_query: str) -> str:
+    # Retrieve relevant docs
+    docs = retrieve_context(user_query)
+    # Build enhanced prompt
+    prompt = build_prompt(user_query, docs)
+    # Send to Hugging Face Router API
+    payload = {
+        "model": MODEL,
+        "messages": [{"role": "user", "content": prompt}]
+    }
+    response = requests.post(HF_API_URL, headers=HEADERS, json=payload)
+    response.raise_for_status()
+    data = response.json()
+    try:
+        return data["choices"][0]["message"]["content"]
+    except (KeyError, IndexError):
+        return str(data)
 
