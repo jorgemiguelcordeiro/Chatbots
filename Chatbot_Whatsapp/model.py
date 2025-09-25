@@ -1,4 +1,4 @@
-# 1 - Imports and Basic Setup
+ # 1 - Imports and Basic Setup
 
 import os  #systems operations, like env variables and paths
 import logging #lets the app output info on what is happening - helpful for debugging
