@@ -1,1 +1,10 @@
+fastapi==0.95.2
+uvicorn[standard]==0.22.0
+requests==2.31.0
+pydantic==2.1.1
+python-dotenv==1.0.0
+langchain==0.0.170     # If you use LangChain or similar for RAG (adjust version)
+faiss-cpu==1.7.4       # For vector similarity search
+openai==0.27.8         # If you use OpenAI's API
+huggingface-hub==0.15.1 # For Hugging Face model integration
 
